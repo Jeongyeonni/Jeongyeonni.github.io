@@ -4,19 +4,17 @@ layout: homepage
 
 ## About Me
 
-I am a Ph.D. student at ...
+I am a master student at Computational Clinical Science Labaratory in Seoul National University, Korea. I'm broadly interested in the longitudinal impact of early life events, and the way of preventing negative impact. To achieve this goal, I hope to identify novel markers of psychiatric disorders and treatment oucoms by using neuroscientific approaches and computational methods.
+
 
 ## Research Interests
 
-- **Computer Vision:** image recognition, image generation, video captioning
-- **Machine Learning:** meta-learning, incremental learning, transfer learning
+- **Preventive treatment:** neurocognitive markers, prediction of risk factors
+- **Early Life Stress** risk/protective factors, longitudinal impact
 
 ## News
 
-- **[Feb. 2020]** Our paper about incremental learning is accepted to CVPR 2020.
-- **[Feb. 2020]** We will host the ACM Multimedia Asia 2020 conference in Singapore!
-- **[Sept. 2019]** Our paper about few-shot learning is accepted to NeurIPS 2019.
-- **[Mar. 2019]** Our paper about few-shot learning is accepted to CVPR 2019.
+- **[Aug. 2023]** Our lab received R01 grant from NIH/NIDA.
 
 {% include_relative _includes/publications.md %}
 

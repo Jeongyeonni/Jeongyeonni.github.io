@@ -1,6 +1,6 @@
 # Basic Information 
 title: Jeongyeon Shin
-position: Master Candidate
+position: Ph.D. Student
 affiliation: Seoul National University
 email: tlswjddus98@snu.ac.kr
 
@@ -31,7 +31,6 @@ enable_footnote: true
 # Auto Dark Mode
 # You may use the option to disable the automatic dark theme
 auto_dark_mode: true
-
 # Font
 # You can use this option to choose between Serif or Sans Serif fonts.
 font: "Serif" # or "Sans Serif"
@@ -46,8 +45,11 @@ remote_theme: yaoyao-liu/minimal-light
 
 # The following files will be removed from the generated website.
 exclude:
+  - vendor
+  - .bundle
   - Gemfile
   - Gemfile.lock
+  - node_modules
   - README.md
   - README_zh_Hans.md
   - README_zh_Hant.md
@@ -55,3 +57,5 @@ exclude:
   - LICENSE
   - minimal-light.gemspec
   - html_source_file/
+  - package.json
+  - package-lock.json

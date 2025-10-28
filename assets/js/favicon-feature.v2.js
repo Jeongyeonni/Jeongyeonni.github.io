@@ -68,51 +68,43 @@ document.addEventListener('DOMContentLoaded', function() {
             faviconImg.style.top = lastPosition.top;
           }
 
-          // PC: Click to follow cursor, click again to place
-          faviconImg.addEventListener('click', function(e) {
+          // PC: Drag and drop with mouse
+          faviconImg.addEventListener('mousedown', function(e) {
+            e.preventDefault();
             e.stopPropagation();
 
-            if (!isDragging) {
-              // Get current position before changing to fixed
-              const rect = faviconImg.getBoundingClientRect();
+            // Get position and offset BEFORE adding dragging class
+            const rect = faviconImg.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
 
-              // Start following cursor
-              isDragging = true;
-              faviconImg.classList.add('dragging');
+            // Set position before changing class (prevents jump)
+            faviconImg.style.left = rect.left + 'px';
+            faviconImg.style.top = rect.top + 'px';
 
-              // Set initial position to current position
-              faviconImg.style.left = rect.left + 'px';
-              faviconImg.style.top = rect.top + 'px';
+            // Start dragging
+            isDragging = true;
+            faviconImg.classList.add('dragging');
 
-              mouseMoveListener = function(e) {
-                if (faviconImg && isDragging) {
-                  faviconImg.style.left = (e.clientX - 24) + 'px';
-                  faviconImg.style.top = (e.clientY - 24) + 'px';
-                }
-              };
+            const handleMouseMove = function(e) {
+              if (faviconImg && isDragging) {
+                faviconImg.style.left = (e.clientX - offsetX) + 'px';
+                faviconImg.style.top = (e.clientY - offsetY) + 'px';
+              }
+            };
 
-              document.addEventListener('mousemove', mouseMoveListener);
+            const handleMouseUp = function(e) {
+              // Stop dragging and keep favicon at current position
+              isDragging = false;
+              faviconImg.classList.remove('dragging');
+              faviconImg.classList.add('placed');
 
-              // Click anywhere to place
-              const clickToPlaceListener = function(e) {
-                if (isDragging && e.target !== faviconImg) {
-                  isDragging = false;
-                  faviconImg.classList.remove('dragging');
-                  faviconImg.classList.add('placed');
+              document.removeEventListener('mousemove', handleMouseMove);
+              document.removeEventListener('mouseup', handleMouseUp);
+            };
 
-                  if (mouseMoveListener) {
-                    document.removeEventListener('mousemove', mouseMoveListener);
-                    mouseMoveListener = null;
-                  }
-
-                  document.removeEventListener('click', clickToPlaceListener);
-                }
-              };
-
-              setTimeout(function() {
-                document.addEventListener('click', clickToPlaceListener);
-              }, 100);
-            }
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
           });
 
           // Mobile: Touch and drag

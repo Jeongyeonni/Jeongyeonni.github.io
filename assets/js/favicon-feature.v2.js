@@ -73,14 +73,18 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             e.stopPropagation();
 
+            // Get position before changing to fixed
+            const rect = faviconImg.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+
             // Start dragging
             isDragging = true;
             faviconImg.classList.add('dragging');
 
-            // Calculate offset from mouse position to element's top-left corner
-            const rect = faviconImg.getBoundingClientRect();
-            const offsetX = e.clientX - rect.left;
-            const offsetY = e.clientY - rect.top;
+            // Set initial position in fixed coordinates
+            faviconImg.style.left = rect.left + 'px';
+            faviconImg.style.top = rect.top + 'px';
 
             mouseMoveListener = function(e) {
               if (faviconImg && isDragging) {

@@ -1,0 +1,45 @@
+/* Favicon next to About Me heading */
+.about-me-favicon {
+  width: 48px !important;
+  height: 48px !important;
+  margin-left: 10px !important;
+  vertical-align: middle !important;
+  display: inline-block !important;
+  cursor: pointer !important;
+  transition: transform 0.2s ease !important;
+  position: absolute !important;
+  margin-top: -10px !important;
+}
+
+.about-me-favicon.dragging {
+  position: fixed !important;
+  z-index: 9999 !important;
+  pointer-events: none !important;
+  animation: none !important;
+  margin-left: 0 !important;
+}
+
+.about-me-favicon.placed {
+  position: fixed !important;
+  z-index: 9999 !important;
+  margin-left: 0 !important;
+  cursor: grab !important;
+}
+
+.about-me-favicon.placed:not(.fade-out) {
+  animation: none !important;
+}
+
+.about-me-favicon:hover:not(.dragging) {
+  transform: scale(1.1) !important;
+}
+
+/* Cursor pointer for profile photo */
+#profile-photo {
+  cursor: pointer !important;
+  transition: transform 0.3s ease !important;
+}
+
+#profile-photo:hover {
+  transform: scale(1.05) !important;
+}

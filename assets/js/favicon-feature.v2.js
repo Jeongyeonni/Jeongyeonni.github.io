@@ -68,58 +68,80 @@ document.addEventListener('DOMContentLoaded', function() {
             faviconImg.style.top = lastPosition.top;
           }
 
-          // Drag and drop handler for both mouse and touch events
-          const handleDragStart = function(e) {
+          // PC: Click to follow cursor, click again to place
+          faviconImg.addEventListener('click', function(e) {
+            e.stopPropagation();
+
+            if (!isDragging) {
+              // Start following cursor
+              isDragging = true;
+              faviconImg.classList.add('dragging');
+
+              mouseMoveListener = function(e) {
+                if (faviconImg && isDragging) {
+                  faviconImg.style.left = (e.clientX - 24) + 'px';
+                  faviconImg.style.top = (e.clientY - 24) + 'px';
+                }
+              };
+
+              document.addEventListener('mousemove', mouseMoveListener);
+
+              // Click anywhere to place
+              const clickToPlaceListener = function(e) {
+                if (isDragging && e.target !== faviconImg) {
+                  isDragging = false;
+                  faviconImg.classList.remove('dragging');
+                  faviconImg.classList.add('placed');
+
+                  if (mouseMoveListener) {
+                    document.removeEventListener('mousemove', mouseMoveListener);
+                    mouseMoveListener = null;
+                  }
+
+                  document.removeEventListener('click', clickToPlaceListener);
+                }
+              };
+
+              setTimeout(function() {
+                document.addEventListener('click', clickToPlaceListener);
+              }, 100);
+            }
+          });
+
+          // Mobile: Touch and drag
+          faviconImg.addEventListener('touchstart', function(e) {
             e.preventDefault();
             e.stopPropagation();
 
-            // Get client coordinates from mouse or touch event
-            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-            const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-
-            // Get position before changing to fixed
+            const touch = e.touches[0];
             const rect = faviconImg.getBoundingClientRect();
-            const offsetX = clientX - rect.left;
-            const offsetY = clientY - rect.top;
+            const offsetX = touch.clientX - rect.left;
+            const offsetY = touch.clientY - rect.top;
 
-            // Start dragging
             isDragging = true;
             faviconImg.classList.add('dragging');
-
-            // Set initial position in fixed coordinates
             faviconImg.style.left = rect.left + 'px';
             faviconImg.style.top = rect.top + 'px';
 
-            const handleMove = function(e) {
-              if (faviconImg && isDragging) {
-                const moveX = e.clientX || (e.touches && e.touches[0].clientX);
-                const moveY = e.clientY || (e.touches && e.touches[0].clientY);
-                faviconImg.style.left = (moveX - offsetX) + 'px';
-                faviconImg.style.top = (moveY - offsetY) + 'px';
+            const handleTouchMove = function(e) {
+              if (faviconImg && isDragging && e.touches[0]) {
+                faviconImg.style.left = (e.touches[0].clientX - offsetX) + 'px';
+                faviconImg.style.top = (e.touches[0].clientY - offsetY) + 'px';
               }
             };
 
-            const handleEnd = function(e) {
-              // Stop dragging and keep favicon at current position
+            const handleTouchEnd = function(e) {
               isDragging = false;
               faviconImg.classList.remove('dragging');
               faviconImg.classList.add('placed');
 
-              document.removeEventListener('mousemove', handleMove);
-              document.removeEventListener('mouseup', handleEnd);
-              document.removeEventListener('touchmove', handleMove);
-              document.removeEventListener('touchend', handleEnd);
+              document.removeEventListener('touchmove', handleTouchMove);
+              document.removeEventListener('touchend', handleTouchEnd);
             };
 
-            document.addEventListener('mousemove', handleMove);
-            document.addEventListener('mouseup', handleEnd);
-            document.addEventListener('touchmove', handleMove, { passive: false });
-            document.addEventListener('touchend', handleEnd);
-          };
-
-          // Add both mouse and touch event listeners
-          faviconImg.addEventListener('mousedown', handleDragStart);
-          faviconImg.addEventListener('touchstart', handleDragStart, { passive: false });
+            document.addEventListener('touchmove', handleTouchMove, { passive: false });
+            document.addEventListener('touchend', handleTouchEnd);
+          }, { passive: false });
 
           // Listen for theme changes and update favicon
           if (window.matchMedia) {

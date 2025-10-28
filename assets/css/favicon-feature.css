@@ -5,18 +5,22 @@
   margin-left: 10px !important;
   vertical-align: middle !important;
   display: inline-block !important;
-  cursor: pointer !important;
+  cursor: grab !important;
   transition: transform 0.2s ease !important;
   position: absolute !important;
   margin-top: -10px !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
 }
 
 .about-me-favicon.dragging {
   position: fixed !important;
   z-index: 9999 !important;
-  pointer-events: none !important;
   animation: none !important;
   margin-left: 0 !important;
+  cursor: grabbing !important;
 }
 
 .about-me-favicon.placed {

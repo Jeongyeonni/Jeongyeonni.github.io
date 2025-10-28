@@ -120,15 +120,18 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             e.stopPropagation();
 
+            // Get position BEFORE adding dragging class
             const touch = e.touches[0];
             const rect = faviconImg.getBoundingClientRect();
             const offsetX = touch.clientX - rect.left;
             const offsetY = touch.clientY - rect.top;
 
-            isDragging = true;
-            faviconImg.classList.add('dragging');
+            // Set position before changing class (prevents jump)
             faviconImg.style.left = rect.left + 'px';
             faviconImg.style.top = rect.top + 'px';
+
+            isDragging = true;
+            faviconImg.classList.add('dragging');
 
             const handleTouchMove = function(e) {
               if (faviconImg && isDragging && e.touches[0]) {

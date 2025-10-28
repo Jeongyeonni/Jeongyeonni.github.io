@@ -1,6 +1,7 @@
 // Toggle favicon next to "About Me" when profile photo is clicked
 document.addEventListener('DOMContentLoaded', function() {
-  const profilePhoto = document.getElementById('profile-photo');
+  // Try to find profile photo by ID first, then by class
+  const profilePhoto = document.getElementById('profile-photo') || document.querySelector('a.image.avatar');
   const favicon = document.querySelector('link[media="(prefers-color-scheme:light)"]')?.href || './assets/img/favicon.png';
   const faviconDark = document.querySelector('link[media="(prefers-color-scheme:dark)"]')?.href || './assets/img/favicon-dark.png';
   let faviconImg = null;

@@ -73,9 +73,16 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
 
             if (!isDragging) {
+              // Get current position before changing to fixed
+              const rect = faviconImg.getBoundingClientRect();
+
               // Start following cursor
               isDragging = true;
               faviconImg.classList.add('dragging');
+
+              // Set initial position to current position
+              faviconImg.style.left = rect.left + 'px';
+              faviconImg.style.top = rect.top + 'px';
 
               mouseMoveListener = function(e) {
                 if (faviconImg && isDragging) {

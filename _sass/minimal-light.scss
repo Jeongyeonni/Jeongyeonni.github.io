@@ -595,3 +595,71 @@ footer {
   display:none;
   font-family: monospace;
 }
+
+/* Favicon next to About Me heading */
+.about-me-favicon {
+  width: 48px;
+  height: 48px;
+  margin-left: 10px;
+  vertical-align: middle;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  position: absolute;
+  margin-top: -10px;
+}
+
+.about-me-favicon.dragging {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  animation: none;
+  margin-left: 0;
+}
+
+.about-me-favicon.placed {
+  position: fixed;
+  z-index: 9999;
+  margin-left: 0;
+  cursor: grab;
+}
+
+.about-me-favicon.placed:not(.fade-out) {
+  animation: none;
+}
+
+.about-me-favicon:hover:not(.dragging) {
+  transform: scale(1.1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+/* Cursor pointer for profile photo */
+#profile-photo {
+  cursor: pointer !important;
+  transition: transform 0.3s ease;
+}
+
+#profile-photo:hover {
+  transform: scale(1.05);
+}

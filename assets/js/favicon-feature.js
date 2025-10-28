@@ -76,8 +76,10 @@ document.addEventListener('DOMContentLoaded', function() {
             isDragging = true;
             faviconImg.classList.add('dragging');
 
-            const offsetX = e.clientX - (faviconImg.getBoundingClientRect().left + 24);
-            const offsetY = e.clientY - (faviconImg.getBoundingClientRect().top + 24);
+            // Calculate offset from mouse position to element's top-left corner
+            const rect = faviconImg.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
 
             mouseMoveListener = function(e) {
               if (faviconImg && isDragging) {
